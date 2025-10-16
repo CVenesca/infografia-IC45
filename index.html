@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVenesca Group LLC | Suministro Estratégico de Azúcar ICUMSA 45</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 450px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flowchart-step {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            border: 2px solid #7a5195;
+            border-radius: 0.5rem;
+            background-color: #ffffff;
+            color: #003f5c;
+            min-height: 100px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .flowchart-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #7a5195;
+            padding: 0 1rem;
+            transform: rotate(90deg);
+        }
+        @media (min-width: 768px) {
+            .flowchart-arrow {
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+<body class="bg-[#f0f2f5]">
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <!-- Espacio para el logo de la empresa -->
+            <img src="images/logos-footer-1.webp" 
+                 alt="Logo de CVenesca Group LLC" 
+                 class="mx-auto h-24 md:h-32 w-auto mb-6 rounded-lg shadow-xl"
+                 onerror="this.onerror=null; this.src='https://placehold.co/200x80/7a5195/ffffff?text=LOGO+CVENESCA';">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#003f5c] mb-2">Su Aliado Estratégico en el Suministro de Azúcar ICUMSA 45</h1>
+            <p class="text-lg md:text-xl text-[#374c80]">Una propuesta de valor de <span class="font-bold">CVenesca Group LLC</span> para un suministro global, seguro y competitivo.</p>
+        </header>
+
+        <section id="product" class="mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <h3 class="text-2xl font-bold text-[#7a5195] mb-2">Calidad Certificada</h3>
+                    <p class="text-5xl font-extrabold text-[#003f5c]">ICUMSA 45</p>
+                    <p class="text-gray-600 mt-2">Polarización $\ge 99.8^{\circ}$</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <h3 class="text-2xl font-bold text-[#7a5195] mb-2">Origen Confiable</h3>
+                    <p class="text-5xl font-extrabold text-[#003f5c]">Brasil</p>
+                    <p class="text-gray-600 mt-2">Salida desde el Puerto de Santos</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                    <h3 class="text-2xl font-bold text-[#7a5195] mb-2">Máxima Garantía</h3>
+                     <p class="text-5xl font-extrabold text-[#003f5c]">SGS</p>
+                    <p class="text-gray-600 mt-2">Inspección y certificaciones FDA/GACC</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-[#003f5c]">Estructura de Precios Competitiva y Transparente</h2>
+                <p class="text-lg text-[#374c80] max-w-3xl mx-auto">Nuestras tarifas están diseñadas para escalar con sus necesidades, ofreciendo un valor excepcional tanto para operaciones spot como para contratos a largo plazo.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold text-center text-[#003f5c] mb-4">Precios Spot y de Prueba (Destino EE. UU.)</h3>
+                    <p class="text-center text-gray-600 mb-4">Esta gráfica compara los costos por tonelada métrica (MT) para envíos iniciales en contenedores, mostrando las opciones de entrega en puerto (CIF) y entrega con aranceles pagados (DDP).</p>
+                    <div class="chart-container">
+                        <canvas id="spotPriceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 flex flex-col justify-between">
+                    <div>
+                      <h3 class="text-xl font-bold text-center text-[#003f5c] mb-4">Economía de Escala en Contratos Anuales (CIF/AWSP)</h3>
+                      <p class="text-center text-gray-600 mb-4">Visualice cómo el precio por tonelada métrica disminuye drásticamente a medida que aumenta el volumen de su contrato mensual. Nuestro modelo premia los compromisos a gran escala.</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="bulkPriceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategic-analysis" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-[#003f5c]">📈 Análisis Estratégico del Mercado</h2>
+                <p class="text-lg text-[#374c80] max-w-3xl mx-auto">Información clave para planificar su compra, basada en la estabilidad de la producción brasileña y los factores logísticos globales.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <div class="bg-white rounded-lg shadow-xl p-6 border-t-4 border-[#ffa600]">
+                    <h3 class="text-xl font-bold text-[#7a5195] mb-4">Factores Clave de Precios (Volumen)</h3>
+                    <p class="text-gray-600 mb-4">El precio final por tonelada se define principalmente por el volumen total del contrato y el Incoterm (CIF, FOB, DDP).</p>
+                    <div class="bg-gray-100 p-4 rounded-lg min-h-[100px] text-sm whitespace-pre-wrap">
+                        <p class="font-bold text-[#003f5c] mb-2">1. Volumen Mensual (Escala):</p>
+                        <p class="mb-2">Contratos mayores a 100,000 MT/mes desbloquean las mejores tarifas. La negociación se ajusta al precio de referencia del mercado (AWSP/LME).</p>
+                        <p class="font-bold text-[#003f5c] mb-2">2. Términos de Entrega (CIF/DDP):</p>
+                        <p>El precio DDP (Delivered Duty Paid - con aranceles pagados) incluye logística de última milla y aranceles, ofreciendo un costo final fijo, ideal para importadores que buscan cero complejidad.</p>
+                    </div>
+                </div>
+
+                
+                <div class="bg-white rounded-lg shadow-xl p-6 border-t-4 border-[#ff764a]">
+                    <h3 class="text-xl font-bold text-[#7a5195] mb-4">Análisis de Estabilidad y Logística (Visión 2024-2025)</h3>
+                    <p class="text-gray-600 mb-4">La robustez del sector azucarero brasileño mitiga riesgos, aunque factores externos deben considerarse.</p>
+                    
+                    <div class="bg-gray-100 p-4 rounded-lg min-h-[100px] text-sm whitespace-pre-wrap">
+                        <p class="font-bold text-[#003f5c] mb-2">Producción Sólida:</p>
+                        <p class="mb-2">Brasil mantiene un superávit de producción significativo (principalmente en el Centro-Sur), asegurando una oferta constante que estabiliza la presión al alza de los precios globales.</p>
+                        
+                        <p class="font-bold text-[#003f5c] mb-2">Riesgo Logístico Clave:</p>
+                        <p>El Puerto de Santos maneja altos volúmenes de exportación. Aunque la capacidad es alta, es crucial asegurar slots de carga con anticipación (contratos a largo plazo) para evitar demoras por congestión en temporada alta.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="security" class="mb-12">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-[#003f5c]">Seguridad Financiera y Logística: Nuestro Compromiso</h2>
+                <p class="text-lg text-[#374c80] max-w-3xl mx-auto">Hemos diseñado un proceso de transacción que protege su inversión en cada paso, ofreciendo una garantía y transparencia sin precedentes en el mercado.</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 md:p-8">
+                <h3 class="text-xl font-bold text-center text-[#003f5c] mb-6">Flujo de Transacción Garantizado</h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-stretch">
+                    <div class="flowchart-step"><span>1. Cliente envía ICPO, CIS y Pasaporte</span></div>
+                    <div class="flowchart-arrow">&#10140;</div>
+                    <div class="flowchart-step"><span>2. Se formaliza Contrato (SPA) y se emite garantía (DLC/SBLC)</span></div>
+                    <div class="flowchart-arrow">&#10140;</div>
+                    <div class="flowchart-step bg-[#ffa600] text-white border-[#ff764a]">
+                        <div class="w-full">
+                           <span class="font-bold block">Paso Clave de Seguridad</span>
+                           <span class="block mt-2">Vendedor emite Performance Bond del 2%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center my-4">
+                     <div class="text-3xl text-[#7a5195]">&#11167;</div>
+                </div>
+                 <div class="border-2 border-dashed border-[#ffa600] rounded-lg p-6 mt-4 bg-yellow-50">
+                    <h4 class="text-lg font-bold text-center text-[#ef5675] mb-2">Mecanismo Exclusivo con BNI BANK EUROPA</h4>
+                    <p class="text-center text-[#bc5090] mb-4">Para una protección total de fondos, utilizamos una Cuenta de Depósito en Depósito (Escrow Account).</p>
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-stretch">
+                        <div class="flowchart-step border-[#ef5675]"><span>3. Cliente deposita fondos en Cuenta Escrow BNI</span></div>
+                        <div class="flowchart-arrow text-[#ef5675]">&#10140;</div>
+                        <div class="flowchart-step border-[#ef5675]"><span>4. Vendedor presenta documentos de carga completos a BNI</span></div>
+                        <div class="flowchart-arrow text-[#ef5675]">&#10140;</div>
+                        <div class="flowchart-step border-[#ef5675]"><span>5. BNI libera el pago al Vendedor</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="text-center bg-[#003f5c] text-white rounded-lg shadow-xl p-8 md:p-12">
+            <h2 class="text-3xl font-bold mb-4">Inicie su Proceso de Suministro Hoy</h2>
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto mb-6">Estamos listos para activar su solicitud. Para comenzar, por favor envíe la siguiente documentación:</p>
+            <div class="flex flex-wrap justify-center gap-4 text-lg mb-8">
+                <span class="bg-[#374c80] rounded-full px-4 py-2">1. ICPO</span>
+                <span class="bg-[#374c80] rounded-full px-4 py-2">2. CIS</span>
+                <span class="bg-[#374c80] rounded-full px-4 py-2">3. Pasaporte</span>
+            </div>
+            <div class="mt-6">
+                <p class="font-bold">Edgar Sanchez | Director de Operaciones</p>
+                <p>Email: <a href="mailto:info@cvenesca.com" class="underline hover:text-[#ffa600]">info@cvenesca.com</a> / <a href="mailto:negocios@cvenesca.com" class="underline hover:text-[#ffa600]">negocios@cvenesca.com</a></p>
+                <p>Teléfonos: +58 4221504216 / +58 4121504216</p>
+            </div>
+             <p class="text-xs text-gray-400 mt-8">Nota: Todos los precios están sujetos a variación sin previo aviso. Ciertas condiciones aplican a cada tipo de operación.</p>
+        </section>
+
+    </main>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            
+            // Función auxiliar para envolver etiquetas largas en el gráfico
+            const wrapLabel = (label) => {
+                if (label.length > 16) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    for (const word of words) {
+                        if ((currentLine + word).length > 16) {
+                            lines.push(currentLine.trim());
+                            currentLine = '';
+                        }
+                        currentLine += word + ' ';
+                    }
+                    lines.push(currentLine.trim());
+                    return lines;
+                }
+                return label;
+            };
+
+            const tooltipTitleCallback = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            // --- Configuración de Gráficas ---
+
+            const spotPriceLabels = ['1 a 5 Contenedores', '5 a 15 Contenedores', 'Más de 15 contenedores'];
+            const spotPriceCtx = document.getElementById('spotPriceChart').getContext('2d');
+            new Chart(spotPriceCtx, {
+                type: 'bar',
+                data: {
+                    labels: spotPriceLabels.map(wrapLabel),
+                    datasets: [{
+                        label: 'Precio CIF (USD/MT)',
+                        data: [740, 730, 690],
+                        backgroundColor: '#374c80',
+                        borderColor: '#003f5c',
+                        borderWidth: 1
+                    }, {
+                        label: 'Precio DDP (USD/MT)',
+                        data: [990, 980, 940],
+                        backgroundColor: '#ef5675',
+                        borderColor: '#bc5090',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    },
+                    ...tooltipTitleCallback
+                }
+            });
+
+            const bulkPriceCtx = document.getElementById('bulkPriceChart').getContext('2d');
+            new Chart(bulkPriceCtx, {
+                type: 'line',
+                data: {
+                    labels: ['12.5k', '25k', '50k', '75k', '100k', '150k', '200k', '300k', '400k', '500k', '1M', '5M'],
+                    datasets: [{
+                        label: 'Precio CIF/AWSP (USD/MT)',
+                        data: [465, 460, 455, 450, 415, 405, 400, 395, 385, 385, 360, 330],
+                        fill: true,
+                        backgroundColor: 'rgba(255, 118, 74, 0.2)',
+                        borderColor: '#ff764a',
+                        tension: 0.1,
+                        pointBackgroundColor: '#ffa600',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                             ticks: {
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        },
+                        x: {
+                           title: {
+                               display: true,
+                               text: 'Volumen Mensual (MT)'
+                           }
+                        }
+                    },
+                    ...tooltipTitleCallback
+                }
+            });
+            
+            // Eliminamos toda la lógica de la API de Gemini para la publicación.
+            // Las secciones LLM se reemplazaron por contenido estático.
+        });
+    </script>
+</body>
+</html>
